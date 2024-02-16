@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Guitars</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="home.html">Guitar Inventory Management</a>
+            <a href="about.html">About</a>
+            <a href="add.html">Add</a>
+            <a href="search.html">Search</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Search Guitars</h1>
+        <form id="searchGuitarForm">
+            <label for="builder">Builder:</label>
+            <input type="text" id="builder" name="builder"><br>
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model"><br>
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type"><br>
+            <label for="backWood">Back Wood:</label>
+            <input type="text" id="backWood" name="backWood"><br>
+            <label for="topWood">Top Wood:</label>
+            <input type="text" id="topWood" name="topWood"><br>
+            <button type="submit">Search</button>
+        </form>
+        <table id="searchResults">
+            <tbody>
+                <!-- Search results will be inserted here -->
+            </tbody>
+        </table>
+    </main>
+    <script>
+        let guitars = [
+            { serialNumber: 'SN001', price: 1000, builder: 'Builder1', model: 'Model1', type: 'Type1', backWood: 'Wood1', topWood: 'Wood2' },
+            { serialNumber: 'SN002', price: 1500, builder: 'Builder2', model: 'Model2', type: 'Type2', backWood: 'Wood3', topWood: 'Wood4' },
+            { serialNumber: 'SN003', price: 1200, builder: 'Builder3', model: 'Model3', type: 'Type3', backWood: 'Wood2', topWood: 'Wood1' },
+            { serialNumber: 'SN004', price: 1700, builder: 'Builder1', model: 'Model4', type: 'Type1', backWood: 'Wood4', topWood: 'Wood3' },
+            { serialNumber: 'SN005', price: 1100, builder: 'Builder2', model: 'Model5', type: 'Type2', backWood: 'Wood1', topWood: 'Wood4' }
+        ];
+    
+        document.getElementById('searchGuitarForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let builder = document.getElementById('builder').value;
+            let model = document.getElementById('model').value;
+            let type = document.getElementById('type').value;
+            let backWood = document.getElementById('backWood').value;
+            let topWood = document.getElementById('topWood').value;
+    
+            let results = guitars.filter(guitar =>
+                (!builder || guitar.builder.toLowerCase() === builder.toLowerCase()) &&
+                (!model || guitar.model.toLowerCase() === model.toLowerCase()) &&
+                (!type || guitar.type.toLowerCase() === type.toLowerCase()) &&
+                (!backWood || guitar.backWood.toLowerCase() === backWood.toLowerCase()) &&
+                (!topWood || guitar.topWood.toLowerCase() === topWood.toLowerCase())
+            );
+    
+            let tableBody = document.getElementById('searchResults').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+            results.forEach(result => {
+                let row = tableBody.insertRow();
+                row.insertCell().innerText = "Serial Number: " + result.serialNumber;
+                row = tableBody.insertRow();
+                row.insertCell().innerText = "Price: " + result.price;
+                row = tableBody.insertRow();
+                row.insertCell().innerText = "Builder: " + result.builder;
+                row = tableBody.insertRow();
+                row.insertCell().innerText = "Model: " + result.model;
+                row = tableBody.insertRow();
+                row.insertCell().innerText = "Type: " + result.type;
+                row = tableBody.insertRow();
+                row.insertCell().innerText = "Back Wood: " + result.backWood;
+                row = tableBody.insertRow();
+                row.insertCell().innerText = "Top Wood: " + result.topWood;
+            });
+        });
+    </script>
+</body>
+</html>

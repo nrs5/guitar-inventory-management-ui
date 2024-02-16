@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Guitar</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="home.html">Guitar Inventory Management</a>
+            <a href="about.html">About</a>
+            <a href="add.html">Add</a>
+            <a href="search.html">Search</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Add a Guitar</h1>
+        <form id="addGuitarForm">
+            <label for="serialNumber">Serial Number:</label>
+            <input type="text" id="serialNumber" name="serialNumber"><br>
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price"><br>
+            <label for="builder">Builder:</label>
+            <input type="text" id="builder" name="builder"><br>        
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model"><br>       
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type"><br>       
+            <label for="backWood">Back Wood:</label>
+            <input type="text" id="backWood" name="backWood"><br>       
+            <label for="topWood">Top Wood:</label>
+            <input type="text" id="topWood" name="topWood"><br>       
+            <button type="submit">Add the guitar</button>
+        </form>
+    </main>
+    <script>
+        document.getElementById('addGuitarForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let guitarData = {
+                serialNumber: document.getElementById('serialNumber').value,
+                price: document.getElementById('price').value,
+                builder: document.getElementById('builder').value,
+                model: document.getElementById('model').value,
+                type: document.getElementById('type').value,
+                backWood: document.getElementById('backWood').value,
+                topWood: document.getElementById('topWood').value
+            };
+            alert("You entered: " + JSON.stringify(guitarData));
+        });
+    </script>
+</body>
+</html>
