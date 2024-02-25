@@ -5,49 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Guitar</title>
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Guitar Inventory Management</a>
-            <a href="about.html">About</a>
-            <a href="add.html">Add</a>
-            <a href="search.html">Search</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Add a Guitar</h1>
-        <form id="addGuitarForm">
-            <label for="serialNumber">Serial Number:</label>
-            <input type="text" id="serialNumber" name="serialNumber"><br>
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price"><br>
-            <label for="builder">Builder:</label>
-            <input type="text" id="builder" name="builder"><br>        
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model"><br>       
-            <label for="type">Type:</label>
-            <input type="text" id="type" name="type"><br>       
-            <label for="backWood">Back Wood:</label>
-            <input type="text" id="backWood" name="backWood"><br>       
-            <label for="topWood">Top Wood:</label>
-            <input type="text" id="topWood" name="topWood"><br>       
-            <button type="submit">Add the guitar</button>
-        </form>
-    </main>
+<body style="background-color: orange;">
+
+    <p style="text-align: left;">
+
+        <a style="font-weight: bold; font-size: large; text-decoration: none; color: chocolate; text-align: left;" href="home.html">&nbsp;&nbsp;&nbsp;&nbsp;Guitar Inventory <br> &nbsp;&nbsp;&nbsp;&nbsp;Management</a>
+
+        <span style="float: right;">
+
+            <a style="font-weight: bold; font-size: larger; text-decoration: none; color: black;" href="about.html">About&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a style="font-weight: bold; font-size: larger; text-decoration: none; color: black;" href="add.html">Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a style="font-weight: bold; font-size: larger; text-decoration: none; color: black;" href="search.html">Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    
+        </span>
+
+    </p>
+
+    <label style="font-weight: bold; font-size: large;">Serial Number:</label>
+    <input style="border-width: thin" id="serialNumber"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Price:</label>
+    <input style="border-width: thin" id="price"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Builder:</label>
+    <input style="border-width: thin" id="builder"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Model:</label>
+    <input style="border-width: thin" id="model"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Type:</label>
+    <input style="border-width: thin;" id="type"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Back Wood:</label>
+    <input style="border-width: thin; " id="backWood"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Top Wood:</label>
+    <input style="border-width: thin;" id="topWood"/>
+    <br />
+    <br />
+
+    <button onclick="addTheGuitar()">Add the guitar</button>
+
     <script>
-        document.getElementById('addGuitarForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let guitarData = {
-                serialNumber: document.getElementById('serialNumber').value,
-                price: document.getElementById('price').value,
-                builder: document.getElementById('builder').value,
-                model: document.getElementById('model').value,
-                type: document.getElementById('type').value,
-                backWood: document.getElementById('backWood').value,
-                topWood: document.getElementById('topWood').value
+
+        let host = "http://localhost:8080";
+
+        async function addTheGuitar() {
+           let serialNode = document.getElementById("serialNumber");
+           let gserialNumber = serialNode.value;
+           let priceNode = document.getElementById("price");
+           let gprice = priceNode.value;
+           let builderNode = document.getElementById("builder");
+           let gbuilder = builderNode.value;
+           let modelNode = document.getElementById("model");
+           let gmodel = modelNode.value;
+           let typeNode = document.getElementById("type");
+           let gtype = typeNode.value;
+           let backWoodNode = document.getElementById("backWood");
+           let gbackWood = backWoodNode.value;
+           let topWoodNode = document.getElementById("topWood");
+           let gtopWood = topWoodNode.value;
+
+           let guitar = {serialNumber:gserialNumber, price:gprice, builder:gbuilder, model:gmodel, type:gtype, backWood:gbackWood, topWood:gtopWood};
+           
+           let add = true;
+
+           alert("You entered: " + JSON.stringify(guitar));
+
+           if (gserialNumber == "") {
+            alert("Please enter a serial number")
+            add = false;
+           }
+           if (gprice == "") {
+            alert("Please enter a price")
+            add = false;
+           }
+           if (gbuilder == "") {
+            alert("Please enter a builder")
+            add = false;
+           }
+           if (gmodel == "") {
+            alert("Please enter a model")
+            add = false;
+           }
+           if (gtype == "") {
+            alert("Please enter a type")
+            add = false;
+           }
+           if (gbackWood == "") {
+            alert("Please enter a back wood")
+            add = false;
+           }
+           if (gtopWood == "") {
+            alert("Please enter a top wood")
+            add = false;
+           }
+
+           if (add) {
+
+            let request = {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify(guitar)
             };
-            alert("You entered: " + JSON.stringify(guitarData));
-        });
+
+            let response = await fetch(host + "/add", request);
+
+            if (response.status == 200) {
+                message = "The guitar was added to the system!";
+            }
+            else {
+                message = "Something went wrong. Please try again or contact the customer support team.";
+            }
+
+            console.log(response);
+
+            alert(message);
+           }
+           
+           
+        }
     </script>
+
 </body>
 </html>

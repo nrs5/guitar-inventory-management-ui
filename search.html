@@ -5,80 +5,178 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Guitars</title>
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Guitar Inventory Management</a>
-            <a href="about.html">About</a>
-            <a href="add.html">Add</a>
-            <a href="search.html">Search</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Search Guitars</h1>
-        <form id="searchGuitarForm">
-            <label for="builder">Builder:</label>
-            <input type="text" id="builder" name="builder"><br>
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model"><br>
-            <label for="type">Type:</label>
-            <input type="text" id="type" name="type"><br>
-            <label for="backWood">Back Wood:</label>
-            <input type="text" id="backWood" name="backWood"><br>
-            <label for="topWood">Top Wood:</label>
-            <input type="text" id="topWood" name="topWood"><br>
-            <button type="submit">Search</button>
-        </form>
-        <table id="searchResults">
-            <tbody>
-                <!-- Search results will be inserted here -->
-            </tbody>
-        </table>
-    </main>
+<body style="background-color: orange;">
+
+    <p style="text-align: left;">
+
+        <a style="font-weight: bold; font-size: large; text-decoration: none; color: chocolate; text-align: left;" href="home.html">&nbsp;&nbsp;&nbsp;&nbsp;Guitar Inventory <br> &nbsp;&nbsp;&nbsp;&nbsp;Management</a>
+
+        <span style="float: right;">
+
+            <a style="font-weight: bold; font-size: larger; text-decoration: none; color: black;" href="about.html">About&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a style="font-weight: bold; font-size: larger; text-decoration: none; color: black;" href="add.html">Add&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a style="font-weight: bold; font-size: larger; text-decoration: none; color: black;" href="search.html">Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    
+        </span>
+
+    </p>
+
+    <br />
+    <br />
+
+
+    <label style="font-weight: bold; font-size: large;">Builder:</label>
+    <input style="border-width: thin" id="builder"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Model:</label>
+    <input style="border-width: thin" id="model"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Type:</label>
+    <input style="border-width: thin;" id="type"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Back Wood:</label>
+    <input style="border-width: thin; " id="backWood"/>
+    <br />
+    <br />
+    <label style="font-weight: bold; font-size: large;">Top Wood:</label>
+    <input style="border-width: thin;" id="topWood"/>
+    <br />
+    <br />
+
+
+    <button onclick="search()">Search</button>
+    <br />
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Serial Number</th>
+                <th>Builder</th>
+                <th>Model</th>
+                <th>Type</th>
+                <th>Back Wood</th>
+                <th>Top Wood</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="searchResult">
+        </tbody>
+    </table>
+
+
     <script>
-        let guitars = [
-            { serialNumber: 'SN001', price: 1000, builder: 'Builder1', model: 'Model1', type: 'Type1', backWood: 'Wood1', topWood: 'Wood2' },
-            { serialNumber: 'SN002', price: 1500, builder: 'Builder2', model: 'Model2', type: 'Type2', backWood: 'Wood3', topWood: 'Wood4' },
-            { serialNumber: 'SN003', price: 1200, builder: 'Builder3', model: 'Model3', type: 'Type3', backWood: 'Wood2', topWood: 'Wood1' },
-            { serialNumber: 'SN004', price: 1700, builder: 'Builder1', model: 'Model4', type: 'Type1', backWood: 'Wood4', topWood: 'Wood3' },
-            { serialNumber: 'SN005', price: 1100, builder: 'Builder2', model: 'Model5', type: 'Type2', backWood: 'Wood1', topWood: 'Wood4' }
-        ];
-    
-        document.getElementById('searchGuitarForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let builder = document.getElementById('builder').value;
-            let model = document.getElementById('model').value;
-            let type = document.getElementById('type').value;
-            let backWood = document.getElementById('backWood').value;
-            let topWood = document.getElementById('topWood').value;
-    
-            let results = guitars.filter(guitar =>
-                (!builder || guitar.builder.toLowerCase() === builder.toLowerCase()) &&
-                (!model || guitar.model.toLowerCase() === model.toLowerCase()) &&
-                (!type || guitar.type.toLowerCase() === type.toLowerCase()) &&
-                (!backWood || guitar.backWood.toLowerCase() === backWood.toLowerCase()) &&
-                (!topWood || guitar.topWood.toLowerCase() === topWood.toLowerCase())
-            );
-    
-            let tableBody = document.getElementById('searchResults').getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = '';
-            results.forEach(result => {
-                let row = tableBody.insertRow();
-                row.insertCell().innerText = "Serial Number: " + result.serialNumber;
-                row = tableBody.insertRow();
-                row.insertCell().innerText = "Price: " + result.price;
-                row = tableBody.insertRow();
-                row.insertCell().innerText = "Builder: " + result.builder;
-                row = tableBody.insertRow();
-                row.insertCell().innerText = "Model: " + result.model;
-                row = tableBody.insertRow();
-                row.insertCell().innerText = "Type: " + result.type;
-                row = tableBody.insertRow();
-                row.insertCell().innerText = "Back Wood: " + result.backWood;
-                row = tableBody.insertRow();
-                row.insertCell().innerText = "Top Wood: " + result.topWood;
-            });
-        });
+
+        let host = "http://localhost:8080";
+
+        let guitar1 = {serialNumber:"serialNumber1", price:1, builder:"builder1", model:"model1", type:"type1", backWood:"backWood1", topWood:"topWood1"};
+        let guitar2 = {serialNumber:"serialNumber2", price:2, builder:"builder2", model:"model2", type:"type2", backWood:"backWood2", topWood:"topWood2"};
+        let guitar3 = {serialNumber:"serialNumber3", price:3, builder:"builder3", model:"model3", type:"type3", backWood:"backWood3", topWood:"topWood3"};
+        let guitar22 = {serialNumber:"serialNumber22", price:2, builder:"builder2", model:"model2", type:"type2", backWood:"backWood2", topWood:"topWood2"};
+        let guitar222 = {serialNumber:"serialNumber222", price:2, builder:"builder2", model:"model2", type:"type2", backWood:"backWood2", topWood:"topWood2"};
+
+
+        let guitars = [guitar1, guitar2, guitar3, guitar22, guitar222];
+
+        async function search() {
+            let results = await searchHelper();
+            if (results != true) {
+                alert("An error has occured.");
+            }
+
+        }
+
+        async function searchHelper(){
+
+            let gbuilder = document.getElementById("builder").value;
+            let gmodel = document.getElementById("model").value;
+            let gtype = document.getElementById("type").value;
+            let gbackWood = document.getElementById("backWood").value;
+            let gtopWood = document.getElementById("topWood").value;
+
+            let table = document.getElementById("searchResult");
+            table.innerHTML = "";
+
+            guitars = await getAll();
+
+
+            for (let guitar of guitars) {
+                if (!gbuilder || gbuilder.toUpperCase() == guitar.builder.toUpperCase()) {
+                    if (!gmodel || gmodel.toUpperCase() == guitar.model.toUpperCase()) {
+                        if (!gtype || gtype.toUpperCase() == guitar.type.toUpperCase()) {
+                            if (!gbackWood || gbackWood.toUpperCase() == guitar.backWood.toUpperCase()) {
+                                if (!gtopWood || gtopWood.toUpperCase() == guitar.topWood.toUpperCase()) {
+
+                                    let row = document.createElement("tr");
+                                    let cell1 = document.createElement("td");
+                                    let cell2 = document.createElement("td");
+                                    let cell3 = document.createElement("td");
+                                    let cell4 = document.createElement("td");
+                                    let cell5 = document.createElement("td");
+                                    let cell6 = document.createElement("td");
+                                    let cell7 = document.createElement("td");
+
+                                    let serialNumber = document.createTextNode(guitar.serialNumber);
+                                    let builder = document.createTextNode(guitar.builder);
+                                    let model = document.createTextNode(guitar.model);
+                                    let type = document.createTextNode(guitar.type);
+                                    let backWood = document.createTextNode(guitar.backWood);
+                                    let topWood = document.createTextNode(guitar.topWood);
+                                    let price = document.createTextNode(guitar.price);
+
+                                    cell1.appendChild(serialNumber);
+                                    cell2.appendChild(builder);
+                                    cell3.appendChild(model);
+                                    cell4.appendChild(type);
+                                    cell5.appendChild(backWood);
+                                    cell6.appendChild(topWood);
+                                    cell7.appendChild(price);
+
+                                    row.appendChild(cell1);
+                                    row.appendChild(cell2);
+                                    row.appendChild(cell3);
+                                    row.appendChild(cell4);
+                                    row.appendChild(cell5);
+                                    row.appendChild(cell6);
+                                    row.appendChild(cell7);
+
+                                    table.appendChild(row);
+
+
+
+
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+
+        }
+
+
+
+        async function getAll() {
+            let response = await fetch(host + "/search");
+            let result = await response.json();
+            let guitars = result;
+            return guitars;
+        }
+
+
+
+
+
     </script>
+
+
+    
+
 </body>
 </html>
