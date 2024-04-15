@@ -3,51 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Guitar</title>
+    <link rel = "stylesheet" href = "navbar.css">
+    <link rel = "stylesheet" href = "add.css">
+    <title>Document</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="index.html">Guitar Inventory Management</a>
-            <a href="about.html">About</a>
-            <a href="add.html">Add</a>
-            <a href="search.html">Search</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Add a Guitar</h1>
-        <form id="addGuitarForm">
-            <label for="serialNumber">Serial Number:</label>
-            <input type="text" id="serialNumber" name="serialNumber"><br>
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price"><br>
-            <label for="builder">Builder:</label>
-            <input type="text" id="builder" name="builder"><br>        
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model"><br>       
-            <label for="type">Type:</label>
-            <input type="text" id="type" name="type"><br>       
-            <label for="backWood">Back Wood:</label>
-            <input type="text" id="backWood" name="backWood"><br>       
-            <label for="topWood">Top Wood:</label>
-            <input type="text" id="topWood" name="topWood"><br>       
-            <button type="submit">Add the guitar</button>
-        </form>
-    </main>
-    <script>
-        document.getElementById('addGuitarForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let guitarData = {
-                serialNumber: document.getElementById('serialNumber').value,
-                price: document.getElementById('price').value,
-                builder: document.getElementById('builder').value,
-                model: document.getElementById('model').value,
-                type: document.getElementById('type').value,
-                backWood: document.getElementById('backWood').value,
-                topWood: document.getElementById('topWood').value
-            };
-            alert("You entered: " + JSON.stringify(guitarData));
-        });
-    </script>
+
+    <ul class="topnav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>        
+        <li><a class = "active" href="add.html">Add</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li class="right"><a href="login.html">Login</a></li>
+      </ul>
+
+    <label>Serial Number: </label>
+    <input id = "serial_number"/>
+    <br/>
+    <label>Price: </label>
+    <input id = "price"/>
+    <br/>
+    <label>Builder: </label>
+    <input id = "builder"/>
+    <br/>
+    <label>Model: </label>
+    <input id = "model"/>
+    <br/>
+    <label>Type: </label>
+    <input id = "type"/>
+    <br/>
+    <label>Back Wood: </label>
+    <input id = "back_wood"/>
+    <br/>
+    <label>Top Wood: </label>
+    <input id = "top_wood"/>
+    <br/>
+    <button onclick="addGuitar()">Add the Guitar</button>
+    
+    <script src = "configuration.js"></script>
+    <script src = "add.js"> </script>>
+
 </body>
 </html>
