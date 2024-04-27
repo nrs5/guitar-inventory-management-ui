@@ -1,7 +1,7 @@
 const mode = 1;
 
 const host_local = "http://localhost:8081";
-const host_remote = "https://guitar-inventory-management-latest-7ezi.onrender.com";
+const host_remote = "https://work-latest.onrender.com";
 
 function getHost() {
     return (mode == 0) ? host_local : host_remote;
